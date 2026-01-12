@@ -98,8 +98,4 @@ Using Supabase with these tables:
 
 ## Notes
 
-This was a learning project to get better at Vue/Nuxt and work with AI APIs. Feel free to use the code however you want.
-
----
-
-Made by a student trying to stay organized 📚
+This was a learning project to get better at Vue/Nuxt and work with AI APIs.
