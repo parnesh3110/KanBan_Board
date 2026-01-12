@@ -45,7 +45,7 @@
               <input
                 v-model="searchQuery"
                 type="text"
-                placeholder="🔍 Search tasks... (press / to focus)"
+                placeholder="Search tasks"
                 class="w-full px-5 py-3 pl-12 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all shadow-sm text-gray-900 dark:text-gray-100"
                 ref="searchInput"
               />

@@ -76,32 +76,7 @@
   <span class="text-xl">{{ mobileMenuOpen ? '✕' : '☰' }}</span>
 </button>
 
-<!-- Add this after the main nav div, before main content -->
-<div 
-  v-if="mobileMenuOpen && user" 
-  class="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800"
->
-  <div class="px-4 py-3 space-y-2">
-    <NuxtLink to="/" class="block py-2 text-sm font-medium" @click="mobileMenuOpen = false">
-      📋 Board
-    </NuxtLink>
-    <NuxtLink to="/calendar" class="block py-2 text-sm font-medium" @click="mobileMenuOpen = false">
-      📅 Calendar
-    </NuxtLink>
-    <NuxtLink to="/analytics" class="block py-2 text-sm font-medium" @click="mobileMenuOpen = false">
-      📊 Analytics
-    </NuxtLink>
-    <NuxtLink to="/ai-chat" class="block py-2 text-sm font-medium" @click="mobileMenuOpen = false">
-      🤖 AI Chat
-    </NuxtLink>
-    <NuxtLink to="/mindmap" class="block py-2 text-sm font-medium" @click="mobileMenuOpen = false">
-      🧠 Mind Map
-    </NuxtLink>
-    <NuxtLink to="/history" class="block py-2 text-sm font-medium" @click="mobileMenuOpen = false">
-      📜 History
-    </NuxtLink>
-  </div>
-</div>
+
               <!-- Dark Mode Toggle -->
               <button
                 @click="toggleDarkMode"
@@ -144,6 +119,63 @@
             </div>
           </div>
         </div>
+        
+        <!-- Mobile Menu - Moved outside flex container -->
+        <div 
+          v-if="mobileMenuOpen && user" 
+          class="md:hidden bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 transition-all duration-200"
+        >
+          <div class="max-w-7xl mx-auto px-4 py-3 space-y-1">
+            <NuxtLink 
+              to="/" 
+              class="block py-2.5 px-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors" 
+              active-class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"
+              @click="mobileMenuOpen = false"
+            >
+              📋 Board
+            </NuxtLink>
+            <NuxtLink 
+              to="/calendar" 
+              class="block py-2.5 px-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors" 
+              active-class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"
+              @click="mobileMenuOpen = false"
+            >
+              📅 Calendar
+            </NuxtLink>
+            <NuxtLink 
+              to="/analytics" 
+              class="block py-2.5 px-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors" 
+              active-class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"
+              @click="mobileMenuOpen = false"
+            >
+              📊 Analytics
+            </NuxtLink>
+            <NuxtLink 
+              to="/ai-chat" 
+              class="block py-2.5 px-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors" 
+              active-class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"
+              @click="mobileMenuOpen = false"
+            >
+              🤖 AI Chat
+            </NuxtLink>
+            <NuxtLink 
+              to="/mindmap" 
+              class="block py-2.5 px-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors" 
+              active-class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"
+              @click="mobileMenuOpen = false"
+            >
+              🧠 Mind Map
+            </NuxtLink>
+            <NuxtLink 
+              to="/history" 
+              class="block py-2.5 px-3 text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-indigo-50 dark:hover:bg-indigo-900/30 rounded-lg transition-colors" 
+              active-class="bg-indigo-50 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 font-bold"
+              @click="mobileMenuOpen = false"
+            >
+              📜 History
+            </NuxtLink>
+          </div>
+        </div>
       </nav>
 
       <!-- Main Content -->
@@ -165,6 +197,26 @@ const user = useSupabaseUser()
 const colorMode = useColorMode()
 const mobileMenuOpen = ref(false)
 
+// Close mobile menu when window is resized to desktop size
+const handleResize = () => {
+  if (typeof window !== 'undefined' && window.innerWidth >= 768) {
+    mobileMenuOpen.value = false
+  }
+}
+
+// Add resize listener
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('resize', handleResize)
+  }
+})
+
+// Cleanup
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('resize', handleResize)
+  }
+})
 
 const toggleDarkMode = () => {
   colorMode.preference = colorMode.value === 'dark' ? 'light' : 'dark'
